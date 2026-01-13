@@ -366,3 +366,4 @@
 # result=map(lambda x:x*2,numbers)
 # print(list(result))
 
+
