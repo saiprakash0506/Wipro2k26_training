@@ -388,9 +388,6 @@
 #     print("can't divide by zero")
 
 #user-defined expections
-class MyError(Exception):
-    pass
-#raise MyError("This is a user defined Exception")
 
 class invalidage(Exception):
     pass
