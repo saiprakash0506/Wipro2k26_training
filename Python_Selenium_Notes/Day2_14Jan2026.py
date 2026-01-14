@@ -175,17 +175,17 @@
 
 #! file handling in json file
 
-import json
+# import json
 
-data={
-    "name":"saiprakashreddy",
-    "age":25,
-    "skills":["python","selenium"],
-    "place":"Hyderabad"
-}
+# data={
+#     "name":"saiprakashreddy",
+#     "age":25,
+#     "skills":["python","selenium"],
+#     "place":"Hyderabad"
+# }
 
-with open("Python_Selenium_Notes/data.json","w") as file:
-    json.dump(data,file,indent=18)
+# with open("Python_Selenium_Notes/data.json","w") as file:
+#     json.dump(data,file,indent=18)
 
 
 #file handling in csv
