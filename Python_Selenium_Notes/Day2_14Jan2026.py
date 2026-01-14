@@ -197,3 +197,37 @@
 #     writer.writerow(["Name","Id","Age"])
 #     writer.writerow(["saiprakash",1,22])
 #     writer.writerow(["prakash",2,82])
+
+
+#! file handling in xml file
+
+#& reading from xml file
+
+import xml.etree.ElementTree as ET
+tree=ET.parse("Python_Selenium_Notes/student.xml")
+root=tree.getroot()
+
+for student in root.findall("student"):
+    id=student.find("id").text 
+    name=student.find("name").text 
+    marks=student.find("marks").text 
+    print(id,name,marks)
+
+
+#& writing into xml file
+
+root=ET.Element("employee")
+
+emp1=ET.SubElement(root,"emp")
+ET.SubElement(emp1,"id").text="1"
+ET.SubElement(emp1,"Name").text="Sai"
+ET.SubElement(emp1,"Salary").text="10000"
+
+emp1=ET.SubElement(root,"emp")
+ET.SubElement(emp1,"id").text="2"
+ET.SubElement(emp1,"Name").text="Prakash"
+ET.SubElement(emp1,"Salary").text="20000"
+
+tree=ET.ElementTree(root)
+tree.write("Python_Selenium_Notes\employee.xml")
+print("Xml file written successfully")
