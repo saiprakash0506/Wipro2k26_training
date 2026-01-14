@@ -59,19 +59,19 @@
 
 #* 4. Create another module that imports this function and reads the file content safely
 
-def read_file_safely(filename):
-    try:
-        with open(filename, "r") as file:
-            content = file.read()
-            return content
+# def read_file_safely(filename):
+#     try:
+#         with open(filename, "r") as file:
+#             content = file.read()
+#             return content
 
-    except FileNotFoundError:
-        return "Error: File not found"
+#     except FileNotFoundError:
+#         return "Error: File not found"
 
-    except PermissionError:
-        return "Error: Permission denied"
+#     except PermissionError:
+#         return "Error: Permission denied"
 
-    except Exception as e:
-        return f"Unexpected error: {e}"
+#     except Exception as e:
+#         return f"Unexpected error: {e}"
 
-print(read_file_safely("Assignment/file3.txt"))
+# print(read_file_safely("Assignment/file3.txt"))
