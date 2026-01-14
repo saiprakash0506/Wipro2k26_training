@@ -80,3 +80,14 @@ for i in fibonacci_generator(10):
 
 #!  Question – Descriptors
 
+
+#&Create a class Employee with attributes:name,salary
+
+#&Implement a descriptor that:
+
+#*1. Ensures salary is always a positive number
+
+#*2. Raises a ValueError if a negative salary is assigned
+
+#*3. Demonstrates the descriptor by creating multiple Employee objects
+
