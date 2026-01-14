@@ -203,31 +203,78 @@
 
 #& reading from xml file
 
-import xml.etree.ElementTree as ET
-tree=ET.parse("Python_Selenium_Notes/student.xml")
-root=tree.getroot()
+# import xml.etree.ElementTree as ET
+# tree=ET.parse("Python_Selenium_Notes/student.xml")
+# root=tree.getroot()
 
-for student in root.findall("student"):
-    id=student.find("id").text 
-    name=student.find("name").text 
-    marks=student.find("marks").text 
-    print(id,name,marks)
+# for student in root.findall("student"):
+#     id=student.find("id").text 
+#     name=student.find("name").text 
+#     marks=student.find("marks").text 
+#     print(id,name,marks)
 
 
 #& writing into xml file
 
-root=ET.Element("employee")
+# root=ET.Element("employee")
 
-emp1=ET.SubElement(root,"emp")
-ET.SubElement(emp1,"id").text="1"
-ET.SubElement(emp1,"Name").text="Sai"
-ET.SubElement(emp1,"Salary").text="10000"
+# emp1=ET.SubElement(root,"emp")
+# ET.SubElement(emp1,"id").text="1"
+# ET.SubElement(emp1,"Name").text="Sai"
+# ET.SubElement(emp1,"Salary").text="10000"
 
-emp1=ET.SubElement(root,"emp")
-ET.SubElement(emp1,"id").text="2"
-ET.SubElement(emp1,"Name").text="Prakash"
-ET.SubElement(emp1,"Salary").text="20000"
+# emp1=ET.SubElement(root,"emp")
+# ET.SubElement(emp1,"id").text="2"
+# ET.SubElement(emp1,"Name").text="Prakash"
+# ET.SubElement(emp1,"Salary").text="20000"
 
-tree=ET.ElementTree(root)
-tree.write("Python_Selenium_Notes\employee.xml")
-print("Xml file written successfully")
+# tree=ET.ElementTree(root)
+# tree.write("Python_Selenium_Notes\employee.xml")
+# print("Xml file written successfully")
+
+
+#! decorator -- changes the functionality of the code ,without changing the actual code
+
+# def mydecorator(func):
+#     def wrapper():
+#         print("Before Function call")
+#         func()
+#         print("After Function call")
+#     return wrapper
+
+# @mydecorator
+# def sayhello():
+#     print("Hello")
+
+# sayhello()
+
+
+#! Descriptor -- used to manage the attributes of different classes
+
+# class mydescriptor:
+#     def __get__(self,obj,owner):
+#         print("Getting value")
+#         return obj._x
+#     def __set__(self,obj,value):
+#         print("Setting the value")
+#         obj._x=value
+
+# class Test:
+#     x=mydescriptor
+
+# t=Test()
+# t.x=10
+# print(t.x)  
+
+#! Enum - assigning the fixed values
+
+
+from enum import Enum
+
+class color(Enum):
+    Red=1
+    Green=2
+    Blue=3
+
+print(color.Red.value)
+print(color.Green.value)

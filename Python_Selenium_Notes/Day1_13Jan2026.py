@@ -367,9 +367,9 @@
 # print(list(result))
 
 
-#exception handling
+#!exception handling
 
-#builtin exceptions
+#&builtin exceptions
 
 # try:
 #     a=10
@@ -387,16 +387,22 @@
 # except ZeroDivisionError:
 #     print("can't divide by zero")
 
-#user-defined expections
+#&user-defined expections
 
-class invalidage(Exception):
-    pass
+# class invalidage(Exception):
+#     pass
 
-try:
-    age=int(input("Enter your age"))
-    if age<18:
-        raise invalidage("Age must be 18 or above")
-    else:
-        print("eligible to vote")
-except invalidage as e:
-    print("Error :",e)
+# try:
+#     age=int(input("Enter your age"))
+#     if age<18:
+#         raise invalidage("Age must be 18 or above")
+#     else:
+#         print("eligible to vote")
+# except invalidage as e:
+#     print("Error :",e)
+
+#!enumerate 
+
+# names=["sai","prakash","reddy"]   
+# for index,name in enumerate(names):
+#     print(index,name)
