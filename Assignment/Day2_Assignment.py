@@ -1,0 +1,82 @@
+#!Question – Iterators and Generators
+
+#& 1. Create a custom iterator class that iterates over numbers from 1 to N
+
+class Number:
+    def __init__(self,limit):
+        self.limit=limit
+        self.current=1
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if self.current<=self.limit:
+            val=self.current
+            self.current+=1
+            return val
+        else:
+            raise StopIteration
+        
+obj=Number(int(input("Enter any number:")))
+for i in obj:
+    print(i)
+
+#& 2. Create a generator function that yields the first N Fibonacci numbers.
+
+def fibonacci_num(n):
+    a, b = 0, 1
+    count = 0
+
+    while count < n:
+        yield a
+        a, b = b, a + b
+        count += 1
+
+obj=fibonacci_num(5)
+for i in obj:
+    print(i,end=" ")
+
+#& 3. Demonstrate the difference between using the iterator and generator by printing values using a for loop
+
+#! iterator example
+
+class FibonacciIterator:
+    def __init__(self, limit):
+        self.limit = limit
+        self.a = 0
+        self.b = 1
+        self.count = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.count < self.limit:
+            val = self.a
+            self.a, self.b = self.b, self.a + self.b
+            self.count += 1
+            return val
+        else:
+            raise StopIteration
+
+obj=FibonacciIterator(5)
+for i in obj:
+    print(i,end=" ")
+
+
+#generator example
+def fibonacci_generator(n):
+    a, b = 0, 1
+    count = 0
+
+    while count < n:
+        yield a
+        a, b = b, a + b
+        count += 1
+
+for i in fibonacci_generator(10):
+    print(i,end=" ")
+
+#!  Question – Descriptors
+
