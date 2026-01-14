@@ -266,15 +266,24 @@
 # t.x=10
 # print(t.x)  
 
-#! Enum - assigning the fixed values
+#! Enum - assigning the fixed values or restricting the other values
 
-
+#* example 1
 from enum import Enum
 
-class color(Enum):
-    Red=1
-    Green=2
-    Blue=3
+# class color(Enum):
+#     Red=1
+#     Green=2
+#     Blue=3
 
-print(color.Red.value)
-print(color.Green.value)
+# print(color.Red.value)
+# print(color.Green.value)
+
+
+#* example 2
+
+class gender(Enum):
+    Male="M"
+    Female="F"
+print("Name","Sai prakash")
+print("Gender:",gender.Male.value)
