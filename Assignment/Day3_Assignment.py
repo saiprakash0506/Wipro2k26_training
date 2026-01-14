@@ -6,6 +6,24 @@
 
 #*2. Prints the function name and execution time
 
+import time
+
+def execution_time(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        print(f"{func.__name__} took {time.time() - start:.4f} seconds")
+        return result
+    return wrapper
+
+
+@execution_time
+def test():
+    time.sleep(2)
+
+test()
+
+
 #! Question – Functions, Modules, File Handling & Exceptions
 
 #&Create a small Python package with:
