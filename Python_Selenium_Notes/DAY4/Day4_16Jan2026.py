@@ -85,26 +85,26 @@
 #! Multiple Abstract methods- more than 1 abstract methods
 
 
-# from abc import ABC,abstractmethod
+from abc import ABC,abstractmethod
 
-# class Bank(ABC):
+class Bank(ABC):
 
-#     @abstractmethod
-#     def interest(self):
-#         pass
+    @abstractmethod
+    def interest(self):
+        pass
 
-#     @abstractmethod
-#     def loan(self):
-#         pass
+    @abstractmethod
+    def loan(self):
+        pass
 
-# class Sbi(Bank):
+class Sbi(Bank):
 
-#     def interest(self):
-#         print("Interest is 6% pa")
+    def interest(self):
+        print("Interest is 6% pa")
 
-#     def loan(self):
-#         print("loan amount is 40000")
+    def loan(self):
+        print("loan amount is 40000")
 
-# s=Sbi()
-# s.loan()
-# s.interest()
+s=Sbi()
+s.loan()
+s.interest()
