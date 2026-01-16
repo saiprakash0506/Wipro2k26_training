@@ -10,19 +10,19 @@
 3. Create at least two objects of the class and display their details	
 '''
 
-# class Student:
-#     def __init__(self,name,roll_no):
-#         self.name=name
-#         self.roll_no=roll_no
+class Student:
+    def __init__(self,name,roll_no):
+        self.name=name
+        self.roll_no=roll_no
     
-#     def display_details(self):
-#         print(" Name:",self.name," Rollno: ",self.roll_no)
+    def display_details(self):
+        print(" Name:",self.name," Rollno: ",self.roll_no)
 
-# s1=Student("Saiprakash",12)
-# s2=Student("Ram",34)
+s1=Student("Saiprakash",12)
+s2=Student("Ram",34)
 
-# s1.display_details()
-# s2.display_details()
+s1.display_details()
+s2.display_details()
 
 #! Question – Parameterized Methods, Constructors & Destructors
 
