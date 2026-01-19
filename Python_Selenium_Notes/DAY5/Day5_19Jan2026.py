@@ -72,3 +72,39 @@
 # obj2.c2()
 # obj2.parent1()
 
+#! polymorphism
+
+#& operator overloading
+
+# class Box:
+#     def __init__(self,value):
+#         self.value=value  
+        
+#     def __add__(self,other): #dunder function
+#         return self.value+other.value
+    
+# b1=Box(50)
+# b2=Box(30)
+
+# b3=(b1+b2)
+# print(b3)
+
+
+#! method overriding
+
+# class animal:
+#     def sound(self):
+#         print("animal sound")
+        
+# class dog(animal):
+#     def sound(self):
+#         print("dog barks")
+        
+# class cat(animal):
+#     def sound(self):
+#         print("Cat meows")
+        
+
+# obj=[dog(),cat()]
+# for a in obj:
+#     a.sound()

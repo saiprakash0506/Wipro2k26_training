@@ -13,75 +13,91 @@
 4. Demonstrate single inheritance and multilevel inheritance with appropriate classes			
 '''
 
-class Vehicle:
-    Vehicle_count=0
+# class Vehicle:
+#     Vehicle_count=0
     
-    def __init__(self):
-        Vehicle.Vehicle_count+=1 
+#     def __init__(self):
+#         Vehicle.Vehicle_count+=1 
         
-    def start(self):
-        print("Vehicle started")
+#     def start(self):
+#         print("Vehicle started")
         
-#single Inheritance
+#* single Inheritance
 
-class Car(Vehicle):
-    def drive(self):
-        print("car is driving")
+# class Car(Vehicle):
+#     def drive(self):
+#         print("car is driving")
         
-#Multi level inheritance
+#* Multi level inheritance
 
-class Evcar(Car):
-    def charge(self):
-        print("Electric car is charging")
+# class Evcar(Car):
+#     def charge(self):
+#         print("Electric car is charging")
         
-v=Vehicle()
-c=Car()
-e=Evcar()
+# v=Vehicle()
+# c=Car()
+# e=Evcar()
 
-v.start()
-c.start()
-c.drive()
+# v.start()
+# c.start()
+# c.drive()
 
-e.start()
-e.drive()
-e.charge()
+# e.start()
+# e.drive()
+# e.charge()
 
-#! Question – Parameterized Methods, Constructors & Destructors
+#! Question – Polymorphism (Method & Operator Overloading)
 
-#~ Topics: Parameterized Methods, Constructors & Destructors
+#~ Topics: Introduction to Polymorphism, Polymorphism on Operators
 
-'''Create a class BankAccount that:		
-		
-1. Uses a parameterized constructor to initialize account_number and balance		
-		
-2. Implements methods deposit(amount) and withdraw(amount)		
-		
-3. Uses a destructor to display a message when the object is deleted		
-		
-4. Handle invalid withdrawal using proper checks		
+'''
+    1. Create a class Calculator that demonstrates method overriding			
+				
+	2. Create another class AdvancedCalculator that overrides a method from Calculator			
+				
+	3. Implement operator overloading by overloading the + operator to add two objects of a custom class			
+				
+	4. Demonstrate polymorphism using the same method name with different behaviors			
+ 		
 '''
 
-class BankAccount:
+class Calculator:
+    def calculate(self, a, b):
+        print("Calculator: Performing addition")
+        return a + b
 
-    def __init__(self,account_number,balance):
-        self.account_number=account_number
-        self.balance=balance
 
-    def deposit(self,amount):
-        self.amount=amount
-        self.balance=self.amount+self.balance
-        print(self.amount ,"RS deposited successfully")
-        print("Total balance is :",self.balance,"RS")
+class AdvancedCalculator(Calculator):
+    def calculate(self, a, b):
+        print("AdvancedCalculator: Performing multiplication")
+        return a * b
 
-    def withdrawn(self,amount):
-        self.amount=amount
-        if self.balance>=self.amount:
-            self.balance=self.balance-self.amount
-            print(self.amount,"RS withdrawn successfully")
-            print("Total balance is :",self.balance,"RS")
-        else:
-            print("oops sorry!! Insuffient funds")
 
-b=BankAccount(123,1000)
-b.deposit(1000000000)
-b.withdrawn(20000)
+class Number:
+    def __init__(self, value):
+        self.value = value
+
+    def __add__(self, other):
+        return Number(self.value + other.value)
+
+    def __str__(self):
+        return str(self.value)
+
+def show_result(calculator, a, b):
+
+    result = calculator.calculate(a, b)
+    print("Result:", result)
+
+
+calc = Calculator()
+adv_calc = AdvancedCalculator()
+
+show_result(calc, 10, 5)       
+show_result(adv_calc, 10, 5)  
+
+n1 = Number(20)
+n2 = Number(30)
+
+n3 = n1 + n2  
+print("Sum using overloaded + :", n3)
+
