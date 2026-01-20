@@ -62,7 +62,7 @@ result=re.search("dope",text)
 # result=re.finditer("at",text)
 
 # for i in result:
-#     print(match.start(),match.group())
+#     print(i.start(),i.group())
 
 #&re.sub() -> Replace text
 
@@ -74,10 +74,36 @@ result=re.search("dope",text)
 
 #! match case email example:
 
-email="admin@gmail.com"
+# email="admin@gmail.com"
 
-if re.match(r"[a-z A-Z]+@",email):
-    print("valid email")
+# if re.match(r"[a-z A-Z]+@",email):
+#     print("valid email")
     
-else:
-    print("not a valid email.")
+# else:
+#     print("not a valid email.")
+
+#! full match phone number
+
+# result=re.fullmatch(r"\d{10}","1234567890")
+# print(bool(result))
+
+print(re.search(r"\d+"," age is 24"))
+
+print(re.search(r"a.*c","abcnmds"))
+
+m=(re.search(r"\w+(?=@)","test@gmail.com"))
+print(m.group())
+
+#! regular expression modifiers
+
+print(re.search("python","Python",re.I)) #ignores the case senstive
+
+
+
+#! matching pattern with multi line
+
+text="one\ntwo\nthree\nfour"
+
+print(re.findall(r"^t\w+",text,re.M))
+
+
