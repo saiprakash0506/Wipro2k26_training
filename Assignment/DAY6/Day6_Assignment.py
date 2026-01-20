@@ -10,7 +10,7 @@ Write a Python program that:
 			
 2. Uses re.search() to find the first occurrence of a valid email address in a given text			
 			
-3. Demonstrates the use of meta-characters (., *, +, ?) and special sequences (\d, \w, \s) in the patterns			
+3. Demonstrates the use of meta-characters (., *, +, ?) and special sequences  in the patterns			
 			
 4. Prints matched groups using capturing parentheses			
 
@@ -29,15 +29,15 @@ Write a Python program that:
     
 #--------------------------------------
 
-import re
+# import re
 
-email="Please contact us at konapasaip@gmail.com for assistance."
+# email="Please contact us at konapasaip@gmail.com for assistance."
 
-result=re.search(r"\w+(?=@)",email)
-if result:
-    print("Email found:", result.group())
-else:
-    print("No email found")
+# result=re.search(r"\w+(?=@)",email)
+# if result:
+#     print("Email found:", result.group())
+# else:
+#     print("No email found")
 
 #--------------------------------------
 # import re
@@ -60,18 +60,60 @@ else:
 #         print(f"{pattern} → {match.group()} ({description})")
 
 #-------------------------------------
-import re
+# import re
 
-text = "My email is test@gmail.com"
+# text = "My email is test@gmail.com"
 
-pattern = r"(\w+)@(\w+)\.(\w+)"
+# pattern = r"(\w+)@(\w+)\.(\w+)"
 
-match = re.search(pattern, text)
+# match = re.search(pattern, text)
 
-if match:
-    print("Full match :", match.group())
-    print("Username   :", match.group(1))
-    print("Domain     :", match.group(2))
-    print("Extension  :", match.group(3))
-else:
-    print("No match found")
+# if match:
+#     print("Full match :", match.group())
+#     print("Username   :", match.group(1))
+#     print("Domain     :", match.group(2))
+#     print("Extension  :", match.group(3))
+# else:
+#     print("No match found")
+
+#! 2)Question – Assertions & Regular Expression Modifiers
+
+#~Topics Covered: Assertions, Regular expression modifiers
+
+'''
+Write a Python program that:		
+		
+1. Validates a strong password using regular expressions with the following rules:		
+		
+Minimum 8 characters		
+		
+At least one uppercase letter		
+		
+At least one lowercase letter		
+		
+At least one digit		
+		
+At least one special character		
+		
+2. Uses lookahead assertions (?=)		
+		
+3. Uses regular expression modifiers such as:		
+
+re.IGNORECASE		
+		
+re.MULTILINE		
+		
+re.DOTALL		
+		
+4. Demonstrates how modifiers affect pattern matching with examples		
+'''
+
+# import re
+
+# password = "9398649086@SAi"
+
+# pattern = r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$"
+
+# print("Strong Password" if re.search(pattern, password, re.IGNORECASE | re.MULTILINE | re.DOTALL) else "Weak Password")
+
+
