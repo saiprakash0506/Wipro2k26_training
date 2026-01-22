@@ -49,15 +49,17 @@ def update_user(user_id):
             return jsonify(user)
         
     return jsonify({"message":"user not found"}),404
-        
-        
-#PATCH METHOD -- partial update, send only what you want to update
 
+#! DELETE METHOD
 
-@app1.route("/users/<int:user_id>",methods=["PATCH"])
+@app1.route("/users/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    for user in users:
+        if user["id"] == user_id:
+            users.remove(user)
+            return jsonify({"message": "User deleted successfully"}), 200
 
-def update_user(user_id):
-    pass 
+    return jsonify({"message": "User Not Found"}), 404
 
 if __name__=="__main__":
     app1.run(debug=True)

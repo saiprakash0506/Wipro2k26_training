@@ -1,6 +1,6 @@
 import requests
 
-#! get url -list of all objects
+#! get url - list of all objects
 
 # geturl1="https://api.restful-api.dev/objects"
 
