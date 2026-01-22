@@ -22,7 +22,7 @@ def get_user(user_id):
         if user["id"]==user_id:
             return jsonify(user)
     
-    return jsonify({"message":"User Not Found"}),404 
+    return jsonify({"message":"User Not Found"}),404
 
 
 # POST METHOD 

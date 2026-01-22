@@ -47,7 +47,7 @@ import requests
 
 #! put url - update object
 
-# puturl="https://api.restful-api.dev/objects/ff8081819782e69e019be40466032e75"
+# puturl="https://api.restful-api.dev/objects/ff8081819782e69e019be5f1de0c36ca"
 
 # body={
 #    "name": "Apple MacBook Pro 16",
@@ -68,7 +68,7 @@ import requests
 #! patch - partially update object
 
 
-# patchurl="https://api.restful-api.dev/objects/ff8081819782e69e019be40466032e75"
+# patchurl="https://api.restful-api.dev/objects/ff8081819782e69e019be5f1de0c36ca"
 
 # body={
 #    "name": "Apple MacBook Pro 16 (Updated Name)"
@@ -81,7 +81,7 @@ import requests
 
 #! delete object 
 
-# deleteurl="https://api.restful-api.dev/objects/ff8081819782e69e019be40d22702eb9"
+# deleteurl="https://api.restful-api.dev/objects/ff8081819782e69e019be5f1de0c36ca"
 
 # response=requests.delete(deleteurl)
 # print(response.status_code)

@@ -86,8 +86,6 @@ Using the Flask API created in Question 1:
 
 2. For each endpoint:
 
-
-
 Set the correct HTTP method
 
 Send request headers (Content-Type: application/json)
