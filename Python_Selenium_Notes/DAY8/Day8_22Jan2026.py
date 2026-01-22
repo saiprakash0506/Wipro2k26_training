@@ -6,4 +6,6 @@
 
 #----- refer ("./Flask_Requests.py")
 
-#& #3) Adding Headers in requests library
+#& 3) Parsing HTML (BeautifulSoup, lxml) and JSON parsing and serialization
+
+#----refer("./ParsingHtml.py")
