@@ -26,6 +26,7 @@ headers = {
     "Accept": "application/json",
     "User-Agent": "Python-Requests-App"
 }
+
 try:
     response=requests.get(url,headers=headers)
     
