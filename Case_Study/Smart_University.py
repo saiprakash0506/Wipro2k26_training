@@ -3,6 +3,9 @@ import csv
 import time
 from abc import ABC, abstractmethod
 
+# ==================================================
+# DECORATORS
+# ==================================================
 
 def log_execution(func):
     def wrapper(*args, **kwargs):
@@ -29,6 +32,10 @@ def performance_timer(func):
     return wrapper
 
 
+# ==================================================
+# DESCRIPTORS
+# ==================================================
+
 class MarksDescriptor:
     def __get__(self, instance, owner):
         return instance._marks
@@ -46,6 +53,10 @@ class SalaryDescriptor:
         instance._salary = value
 
 
+# ==================================================
+# ABSTRACT BASE CLASS
+# ==================================================
+
 class Person(ABC):
     def __init__(self, pid, name, department):
         self.pid = pid
@@ -59,6 +70,11 @@ class Person(ABC):
     def __del__(self):
         print(f"Cleaning up {self.name} record")
 
+
+# ==================================================
+# STUDENT CLASS
+# ==================================================
+
 class Student(Person):
     marks = MarksDescriptor()
 
@@ -67,6 +83,9 @@ class Student(Person):
         self.semester = semester
         self.marks = marks
         self.courses = []
+
+    def enroll_course(self, course):
+        self.courses.append(course)
 
     def get_details(self):
         print("Student Details:")
@@ -78,13 +97,17 @@ class Student(Person):
     @log_execution
     @performance_timer
     def calculate_performance(self):
-        avg = sum(m for m in self.marks) / len(self.marks)
+        avg = sum(self.marks) / len(self.marks)
         grade = "A" if avg >= 85 else "B" if avg >= 70 else "C"
         return avg, grade
 
     def __gt__(self, other):
         return sum(self.marks) > sum(other.marks)
 
+
+# ==================================================
+# FACULTY CLASS
+# ==================================================
 
 class Faculty(Person):
     salary = SalaryDescriptor()
@@ -101,6 +124,10 @@ class Faculty(Person):
         print(f"Department: {self.department}")
 
 
+# ==================================================
+# COURSE CLASS
+# ==================================================
+
 class Course:
     def __init__(self, code, name, credits, faculty):
         self.code = code
@@ -110,6 +137,11 @@ class Course:
 
     def __add__(self, other):
         return self.credits + other.credits
+
+
+# ==================================================
+# ITERATOR
+# ==================================================
 
 class CourseIterator:
     def __init__(self, courses):
@@ -127,12 +159,22 @@ class CourseIterator:
         raise StopIteration
 
 
+# ==================================================
+# GENERATOR
+# ==================================================
+
 def student_generator(students):
     print("Fetching Student Records...")
     for s in students:
         yield f"{s.pid} - {s.name}"
 
+
+# ==================================================
+# FILE MANAGER (UTILITY CLASS)
+# ==================================================
+
 class FileManager:
+
     @staticmethod
     def save_json(students, filename="Case_Study/students.json"):
         data = []
@@ -155,19 +197,24 @@ class FileManager:
             writer.writerow(["ID", "Name", "Department", "Average", "Grade"])
             for s in students:
                 avg, grade = s.calculate_performance()
-                writer.writerow([s.pid, s.name, s.department, round(avg,2), grade])
+                writer.writerow([s.pid, s.name, s.department, round(avg, 2), grade])
         print("CSV Report generated successfully")
 
+
+# ==================================================
+# MENU-DRIVEN EXECUTION
+# ==================================================
 
 students = []
 faculty_list = []
 courses = []
 
 while True:
-    print("\n1 Add Student\n2 Add Faculty\n3 Add Course\n4 Calculate Performance\n5 Compare Students\n6 Generate Reports\n7 Exit")
+    print("\n1 Add Student\n2 Add Faculty\n3 Add Course\n4 Enroll Student to Course\n5 Calculate Student Performance\n6 Compare Two Students\n7 Generate Reports\n8 Exit")
     choice = input("Enter choice: ")
 
     try:
+        # ADD STUDENT
         if choice == "1":
             sid = input("Student ID: ")
             if any(s.pid == sid for s in students):
@@ -180,6 +227,7 @@ while True:
             students.append(s)
             print("Student Created Successfully")
 
+        # ADD FACULTY
         elif choice == "2":
             fid = input("Faculty ID: ")
             name = input("Name: ")
@@ -189,6 +237,7 @@ while True:
             faculty_list.append(f)
             print("Faculty Created Successfully")
 
+        # ADD COURSE
         elif choice == "3":
             code = input("Course Code: ")
             cname = input("Course Name: ")
@@ -199,26 +248,50 @@ while True:
             courses.append(c)
             print("Course Added Successfully")
 
+        # ENROLL STUDENT
         elif choice == "4":
+            sid = input("Student ID: ")
+            code = input("Course Code: ")
+            s = next(s for s in students if s.pid == sid)
+            c = next(c for c in courses if c.code == code)
+            s.enroll_course(c)
+            print("Enrollment Successful")
+            print("--------------------------------")
+            print(f"Student Name : {s.name}")
+            print(f"Course       : {c.name}")
+
+        # CALCULATE PERFORMANCE
+        elif choice == "5":
             sid = input("Student ID: ")
             s = next(s for s in students if s.pid == sid)
             avg, grade = s.calculate_performance()
-            print(f"Average: {avg:.2f}, Grade: {grade}")
+            print("Student Performance Report")
+            print("--------------------------------")
+            print(f"Student Name : {s.name}")
+            print(f"Marks        : {s.marks}")
+            print(f"Average      : {avg:.2f}")
+            print(f"Grade        : {grade}")
 
-        elif choice == "5":
+        # COMPARE STUDENTS
+        elif choice == "6":
             s1 = students[0]
             s2 = students[1]
-            print(f"{s1.name} > {s2.name} :", s1 > s2)
+            print("Comparing Students Performance")
+            print("--------------------------------")
+            print(f"{s1.name} > {s2.name} : {s1 > s2}")
 
-        elif choice == "6":
+        # GENERATE REPORTS
+        elif choice == "7":
             FileManager.save_json(students)
             FileManager.save_csv(students)
 
             print("Student Record Generator")
+            print("--------------------------------")
             for rec in student_generator(students):
                 print(rec)
 
-        elif choice == "7":
+        # EXIT
+        elif choice == "8":
             print("Thank you for using Smart University Management System")
             break
 

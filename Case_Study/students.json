@@ -1,0 +1,28 @@
+[
+  {
+    "id": "1",
+    "name": "sai",
+    "department": "cse",
+    "semester": 8,
+    "marks": [
+      50,
+      70,
+      76,
+      80,
+      90
+    ]
+  },
+  {
+    "id": "2",
+    "name": "prakash",
+    "department": "cse",
+    "semester": 8,
+    "marks": [
+      78,
+      78,
+      98,
+      45,
+      88
+    ]
+  }
+]
