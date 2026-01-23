@@ -134,7 +134,7 @@ def student_generator(students):
 
 class FileManager:
     @staticmethod
-    def save_json(students, filename="students.json"):
+    def save_json(students, filename="Case_Study/students.json"):
         data = []
         for s in students:
             data.append({
@@ -149,7 +149,7 @@ class FileManager:
         print("Student data successfully saved to students.json")
 
     @staticmethod
-    def save_csv(students, filename="students_report.csv"):
+    def save_csv(students, filename="Case_Study/students_report.csv"):
         with open(filename, "w", newline="") as f:
             writer = csv.writer(f)
             writer.writerow(["ID", "Name", "Department", "Average", "Grade"])
