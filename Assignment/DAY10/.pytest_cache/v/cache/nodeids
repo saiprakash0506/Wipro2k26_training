@@ -1,0 +1,7 @@
+[
+  "test_2.py::test_add",
+  "test_2.py::test_div",
+  "test_2.py::test_div_by_zero",
+  "test_2.py::test_mul",
+  "test_2.py::test_sub"
+]
