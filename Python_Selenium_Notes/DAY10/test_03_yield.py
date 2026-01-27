@@ -8,3 +8,6 @@ def setup_teardown():
 
 def test_example(setup_teardown):
     print("test running")
+
+def test_example1(setup_teardown):
+    print("test1 running")

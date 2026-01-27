@@ -1,3 +1,9 @@
+'''
+What is pytest?
+
+pytest is a Python testing framework used to write and run automated test cases.
+'''
+
 import pytest
 
 def test_add():  #mandatory to start the method name with "test"
