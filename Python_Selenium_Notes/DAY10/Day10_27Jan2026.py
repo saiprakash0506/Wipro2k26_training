@@ -23,3 +23,4 @@
 
 #executing is done , by typing "pytest" in cmd or terminal
 
+#if it is print statements "pytest -s"
