@@ -1,28 +1,15 @@
 [
   {
-    "id": "101",
-    "name": "sai",
+    "id": "sai",
+    "name": "prakash",
     "department": "cse",
     "semester": 1,
     "marks": [
-      12,
-      34,
-      56,
-      54,
-      22
-    ]
-  },
-  {
-    "id": "102",
-    "name": "prakash",
-    "department": "cse",
-    "semester": 2,
-    "marks": [
-      55,
-      55,
-      23,
-      44,
-      89
+      1,
+      2,
+      3,
+      4,
+      5
     ]
   }
 ]

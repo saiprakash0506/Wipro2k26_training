@@ -3,9 +3,7 @@ import csv
 import time
 from abc import ABC, abstractmethod
 
-# ==================================================
-# DECORATORS
-# ==================================================
+# ---------------- DECORATORS ---------------- #
 
 def log_execution(func):
     def wrapper(*args, **kwargs):
@@ -14,6 +12,7 @@ def log_execution(func):
         return result
     return wrapper
 
+
 def admin_only(func):
     def wrapper(*args, **kwargs):
         if not kwargs.get("is_admin", False):
@@ -21,6 +20,7 @@ def admin_only(func):
             return
         return func(*args, **kwargs)
     return wrapper
+
 
 def performance_timer(func):
     def wrapper(*args, **kwargs):
@@ -32,9 +32,7 @@ def performance_timer(func):
     return wrapper
 
 
-# ==================================================
-# DESCRIPTORS
-# ==================================================
+# ---------------- DESCRIPTORS ---------------- #
 
 class MarksDescriptor:
     def __get__(self, instance, owner):
@@ -45,6 +43,7 @@ class MarksDescriptor:
             raise ValueError("Marks should be between 0 and 100")
         instance._marks = value
 
+
 class SalaryDescriptor:
     def __get__(self, instance, owner):
         raise PermissionError("Access Denied: Salary is confidential")
@@ -53,9 +52,7 @@ class SalaryDescriptor:
         instance._salary = value
 
 
-# ==================================================
-# ABSTRACT BASE CLASS
-# ==================================================
+# ---------------- ABSTRACT CLASS ---------------- #
 
 class Person(ABC):
     def __init__(self, pid, name, department):
@@ -71,9 +68,7 @@ class Person(ABC):
         print(f"Cleaning up {self.name} record")
 
 
-# ==================================================
-# STUDENT CLASS
-# ==================================================
+# ---------------- STUDENT CLASS ---------------- #
 
 class Student(Person):
     marks = MarksDescriptor()
@@ -83,9 +78,6 @@ class Student(Person):
         self.semester = semester
         self.marks = marks
         self.courses = []
-
-    def enroll_course(self, course):
-        self.courses.append(course)
 
     def get_details(self):
         print("Student Details:")
@@ -105,9 +97,7 @@ class Student(Person):
         return sum(self.marks) > sum(other.marks)
 
 
-# ==================================================
-# FACULTY CLASS
-# ==================================================
+# ---------------- FACULTY CLASS ---------------- #
 
 class Faculty(Person):
     salary = SalaryDescriptor()
@@ -124,9 +114,7 @@ class Faculty(Person):
         print(f"Department: {self.department}")
 
 
-# ==================================================
-# COURSE CLASS
-# ==================================================
+# ---------------- COURSE CLASS ---------------- #
 
 class Course:
     def __init__(self, code, name, credits, faculty):
@@ -139,9 +127,7 @@ class Course:
         return self.credits + other.credits
 
 
-# ==================================================
-# ITERATOR
-# ==================================================
+# ---------------- ITERATOR ---------------- #
 
 class CourseIterator:
     def __init__(self, courses):
@@ -153,15 +139,13 @@ class CourseIterator:
 
     def __next__(self):
         if self.index < len(self.courses):
-            val = self.courses[self.index]
+            course = self.courses[self.index]
             self.index += 1
-            return val
+            return course
         raise StopIteration
 
 
-# ==================================================
-# GENERATOR
-# ==================================================
+# ---------------- GENERATOR ---------------- #
 
 def student_generator(students):
     print("Fetching Student Records...")
@@ -169,12 +153,9 @@ def student_generator(students):
         yield f"{s.pid} - {s.name}"
 
 
-# ==================================================
-# FILE MANAGER (UTILITY CLASS)
-# ==================================================
+# ---------------- FILE HANDLING ---------------- #
 
 class FileManager:
-
     @staticmethod
     def save_json(students, filename="Case_Study/students.json"):
         data = []
@@ -201,20 +182,17 @@ class FileManager:
         print("CSV Report generated successfully")
 
 
-# ==================================================
-# MENU-DRIVEN EXECUTION
-# ==================================================
+# ---------------- MAIN PROGRAM ---------------- #
 
 students = []
 faculty_list = []
 courses = []
 
 while True:
-    print("\n1 Add Student\n2 Add Faculty\n3 Add Course\n4 Enroll Student to Course\n5 Calculate Student Performance\n6 Compare Two Students\n7 Generate Reports\n8 Exit")
+    print("\n1 Add Student\n2 Add Faculty\n3 Add Course\n4 Calculate Performance\n5 Compare Students\n6 Generate Reports\n7 Exit")
     choice = input("Enter choice: ")
 
     try:
-        # ADD STUDENT
         if choice == "1":
             sid = input("Student ID: ")
             if any(s.pid == sid for s in students):
@@ -227,7 +205,6 @@ while True:
             students.append(s)
             print("Student Created Successfully")
 
-        # ADD FACULTY
         elif choice == "2":
             fid = input("Faculty ID: ")
             name = input("Name: ")
@@ -237,7 +214,6 @@ while True:
             faculty_list.append(f)
             print("Faculty Created Successfully")
 
-        # ADD COURSE
         elif choice == "3":
             code = input("Course Code: ")
             cname = input("Course Name: ")
@@ -248,52 +224,35 @@ while True:
             courses.append(c)
             print("Course Added Successfully")
 
-        # ENROLL STUDENT
         elif choice == "4":
-            sid = input("Student ID: ")
-            code = input("Course Code: ")
-            s = next(s for s in students if s.pid == sid)
-            c = next(c for c in courses if c.code == code)
-            s.enroll_course(c)
-            print("Enrollment Successful")
-            print("--------------------------------")
-            print(f"Student Name : {s.name}")
-            print(f"Course       : {c.name}")
-
-        # CALCULATE PERFORMANCE
-        elif choice == "5":
             sid = input("Student ID: ")
             s = next(s for s in students if s.pid == sid)
             avg, grade = s.calculate_performance()
-            print("Student Performance Report")
-            print("--------------------------------")
-            print(f"Student Name : {s.name}")
-            print(f"Marks        : {s.marks}")
-            print(f"Average      : {avg:.2f}")
-            print(f"Grade        : {grade}")
+            print(f"Average: {avg:.2f}, Grade: {grade}")
 
-        # COMPARE STUDENTS
+        elif choice == "5":
+            if len(students) < 2:
+                print("Not enough students to compare")
+            else:
+                s1, s2 = students[0], students[1]
+                print(f"{s1.name} > {s2.name} :", s1 > s2)
+
         elif choice == "6":
-            s1 = students[0]
-            s2 = students[1]
-            print("Comparing Students Performance")
-            print("--------------------------------")
-            print(f"{s1.name} > {s2.name} : {s1 > s2}")
-
-        # GENERATE REPORTS
-        elif choice == "7":
             FileManager.save_json(students)
             FileManager.save_csv(students)
 
             print("Student Record Generator")
-            print("--------------------------------")
             for rec in student_generator(students):
                 print(rec)
 
-        # EXIT
-        elif choice == "8":
+        elif choice == "7":
             print("Thank you for using Smart University Management System")
             break
 
+        else:
+            print("Invalid choice")
+
+    except PermissionError as pe:
+        print(pe)
     except Exception as e:
         print("Error:", e)
