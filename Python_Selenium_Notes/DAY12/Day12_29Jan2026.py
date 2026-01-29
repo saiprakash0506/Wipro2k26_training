@@ -54,6 +54,36 @@ Launch RIDE:
 
 #~ ride.py
 
+Then 
+
+#! python -m robotide
+
+After the command new window will open which is RIDE
+
+1) there go to - file- create a new project and name it is 2026.
+
+2) under Test suites create a new .robot test case , give "test1.robot"
+
+3) on the right side , a tab will open go to the text edit and put 
+
+Example: Simple Login Test
+*** Settings ***
+Library    SeleniumLibrary
+*** Test Cases ***
+Open Google ---> #^ test case name 
+    Open Browser    https://www.google.com    chrome
+    Title Should Be    Google
+    Close Browser
+
+4) save changes , go to run tab and click on start.
+
+5) Adding keywords
+
+*** Keywords ***
+Open Application
+    Open Browser    https://example.com    chrome
+    Maximize Browser Window
+
 '''
 
 
