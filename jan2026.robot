@@ -2,16 +2,20 @@
 Library           SeleniumLibrary
 
 *** Variables ***
-${Name}           SaiPrakash
-${Course}         Robot Framework
-@{Numbers}        1    2    3    4
+${url}            https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
+${browser}        edge
+${username}       Admin
+${password}       admin123
 
 *** Test Cases ***
-Log Basic Information
-    Log    Starting first test case
-    Log To Console    Hello ${Name}
-    Log To Console    Learning ${Course}
-    Log    First test case completed
-    Log    Starting second test case
-    Log To Console    Marks are @{Numbers}
-    Log    Second test case completed
+test3_login.robot
+    Open Browser    ${url}    ${browser}
+    Wait Until Page Contains Element    name=username    10s
+    Input Text    name = username    ${username}
+    Input Text    name = password    ${password}
+    sleep    5s
+    Capture Page Screenshot    beforelogin.png
+    Click Button    xpath://button[@type="submit"]
+    sleep    10s
+    Capture Page Screenshot    afterlogin.png
+    Close Browser
