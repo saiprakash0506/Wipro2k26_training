@@ -15,5 +15,23 @@ Write a Robot Framework test suite (.robot file) that:
 5. Executes successfully using the robot command
 
 '''
-#! Ans : refer "./test_1.robot"
+#~  Ans : refer "./test_1.robot"
 
+
+#! Question 2 – Environment Setup Verification (Coding)
+
+'''
+Write a Robot Framework test case that:	
+	
+1. Verifies Python installation	
+	
+2. Verifies Robot Framework installation	
+	
+3. Imports SeleniumLibrary	
+	
+4. Prints the Robot Framework version	
+	
+5. Fails gracefully with meaningful logs if any dependency is missing	
+'''
+
+#! Ans : refer  "./Question2/test2.robot"
