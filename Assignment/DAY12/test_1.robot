@@ -20,3 +20,4 @@ Log Basic Information
     Log         Starting second test case
     Log To Console     Marks are @{Numbers}
     Log         Second test case completed
+
