@@ -1,0 +1,12 @@
+
+
+def fact(num):
+    res=1
+    for i in range(1,num+1):
+        res*=i
+    return res
+
+
+result=fact(1000)
+
+print(result)
