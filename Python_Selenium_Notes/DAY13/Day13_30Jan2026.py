@@ -1,7 +1,7 @@
 #& Data driven Test Cases
 
 #---> using data for validation of login details or something is called data driven test cases.
-#---> refer "Robotframework" folder
+#---> refer "Robotframework" folder ->> "test4_datadriven.robot" file
 
 
 #! getting arguments from the excel sheet
@@ -68,4 +68,14 @@ You enter once.
 You leave once.
 '''
 
-#! check boxes ,radio buttons working
+#! tutorial ninja automation with excel 
+
+# refer --> test6_tutorialninja.robot and test6data.xlsx
+
+#! tutorial ninja automation using csv file 
+
+#refer --> test7_tutorialninja.robot and test7data.csv
+
+
+
+

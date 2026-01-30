@@ -8,12 +8,12 @@ Suite Teardown    Close OrangeHRM
 *** Variables ***
 ${URL}       https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
 ${BROWSER}   edge
- 
+
 *** Keywords ***
 Open OrangeHRM
     Open Browser    ${URL}    ${BROWSER}
     Maximize Browser Window
- 
+
 OrangeHRM Login With Excel
     [Arguments]    ${username}    ${password}
     Wait Until Element Is Visible    name=username    15s
