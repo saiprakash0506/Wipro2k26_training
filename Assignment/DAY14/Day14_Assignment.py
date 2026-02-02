@@ -73,3 +73,37 @@ results/
 🔹 Combine Tags + Output Directory
 robot -d results --include smoke sample_suite.robot
 '''
+
+
+#! Question 6 – Browser Automation & Built-in Libraries (Coding)
+
+#Topics Covered: SeleniumLibrary, Built-in library
+
+'''Write a Robot Framework test case that:
+
+1. Opens a browser using SeleniumLibrary
+
+2. Interacts with:
+
+Text box
+
+Radio button
+
+Check box
+
+Drop-down
+
+3. Uses Built-in keywords:
+
+Run Keyword If
+
+Should Be Equal
+
+Sleep
+
+4. Validates form submission
+
+5. Closes the browser and generates execution reports
+'''
+#& Ans: Refer Question2 folder and test2.robot file.
+
