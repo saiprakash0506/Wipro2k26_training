@@ -18,7 +18,7 @@ Patient_details = [{
 @app.route("/", methods=["GET"])
 def homepage():
     return '''
-    <h1><center>WELCOME TO HOSPITAL MANAGEMENT SYSTEM<center></h1>
+    <h1><center>WELCOME TO HOSPITAL MANAGEMENT SYSTEM</center></h1>
 
     <h3>To register a patient, please visit: /form</h3>
 
