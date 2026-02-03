@@ -43,29 +43,29 @@ def homepage():
 @app.route("/form")
 def form():
     return '''
-    <h2>Patient Registration Form</h2>
+    <h1><center>Patient Registration Form</center></h1>
 
     <form action="/api/patients" method="post">
 
-        Name:<br>
+        Name:
         <input type="text" name="patient_name"><br><br>
 
-        Age:<br>
+        Age:
         <input type="number" name="age"><br><br>
 
-        Gender:<br>
+        Gender:
         <input type="radio" name="gender" value="male">Male
         <input type="radio" name="gender" value="female">Female
         <br><br>
 
-        Contact:<br>
+        Contact:
         <input type="tel" name="contact" pattern="[0-9]{10}" maxlength="10">
         <br><br>
 
-        Disease:<br>
+        Disease:
         <input type="text" name="disease"><br><br>
 
-        Doctor Assigned:<br>
+        Doctor Assigned:
         <select name="doctor_assigned">
             <option value="Dr. Sharat">Dr. Sharat</option>
             <option value="Dr. Seenu">Dr. Seenu</option>

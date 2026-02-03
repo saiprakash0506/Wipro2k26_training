@@ -16,8 +16,8 @@ def patient_payload():
     }
 
 
-def test_get_patients():
-    response = requests.get(f"{BASE_URL}/api/patients")
+def test_get_patients(base_url):
+    response = requests.get(f"{base_url}/api/patients")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 
@@ -26,6 +26,15 @@ def test_add_patient(patient_payload):
     response = requests.post(f"{BASE_URL}/api/patients", json=patient_payload)
     assert response.status_code == 201
     assert response.json()["patient_name"] == "sai"
+
+
+@pytest.mark.skip(reason="Feature under development")
+def test_skip_example():
+    assert True
+
+@pytest.mark.xfail
+def test_expected_failure():
+    assert 1 == 2
 
 
 @pytest.mark.parametrize("invalid_id", [999, 500])
