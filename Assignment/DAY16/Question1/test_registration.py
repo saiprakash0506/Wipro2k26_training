@@ -38,4 +38,3 @@ class TestRegistration():
     self.driver.find_element(By.NAME, "newsletter").click()
     self.driver.find_element(By.NAME, "agree").click()
     self.driver.find_element(By.CSS_SELECTOR, ".btn-primary").click()
-  
