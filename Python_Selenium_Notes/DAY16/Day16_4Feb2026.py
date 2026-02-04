@@ -90,3 +90,4 @@ Example:
 👉 /html/body/.../tag
 
 '''
+# --> refer selectors excel sheet in "saiprakash" folder for more understanding
