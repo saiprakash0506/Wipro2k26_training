@@ -6,4 +6,11 @@
 
 #   1)  open the extension and create new project.
 #   2) put the url there  "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login" 
-#   3) now try to start recording option and try to playback then you will understand how it works
+#   3) now try to start recording option and try to playback then you will understand how it works 
+
+"""
+
+refer=> selenium IDE exports folder for the demo's we have done.
+
+"""
+
