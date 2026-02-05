@@ -12,7 +12,8 @@ Write a Selenium script that:
 4. Submits the form and verifies a confirmation message	
 '''
 
-#& Ans : 
+#& Ans : refer Question1 folder - Selenium1.py file
+
 
 #! Question 2 – Handling Alerts and Pop-ups
 
