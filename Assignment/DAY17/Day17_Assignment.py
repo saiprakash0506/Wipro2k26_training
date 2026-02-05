@@ -31,4 +31,4 @@ Write a Selenium script that:
 5. Verifies the result displayed on the page
 '''
 
-#& Ans : 
+#& Ans : refer Question2/ Selenium2.py file
