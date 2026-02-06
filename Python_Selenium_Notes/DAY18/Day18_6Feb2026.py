@@ -52,6 +52,6 @@ wait.until(ExpectedConditions.elementToBeClickable(By.id("chk1")));
 
 #! Page object
 
-#* Refer Selenium_Page_Object.py file
+#* Refer Selenium_Page_Object.py file and Loginpage.py
 
 
