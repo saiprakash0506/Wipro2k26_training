@@ -3,7 +3,7 @@ Library              SeleniumLibrary
 
 *** Keywords ***
 open application
-    Open Browser         https://www.facebook.com/  edge 
+    Open Browser         https://www.facebook.com/      edge 
     Maximize Browser Window 
 
 
