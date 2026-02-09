@@ -17,7 +17,6 @@ def get_users():
 
 @app1.route("/users/<int:user_id>",methods=["Get"])
 def get_user(user_id):
-    
     for user in users:
         if user["id"]==user_id:
             return jsonify(user)
@@ -59,7 +58,7 @@ def update_user_patch(user_id):
         if user["id"]==user_id:
             if "name"   in data:
                 user["name"]=data.get("name")
-            return jsonify(user)
+                return jsonify(user)
         
     return jsonify({"message":"user not found"}),404
 
