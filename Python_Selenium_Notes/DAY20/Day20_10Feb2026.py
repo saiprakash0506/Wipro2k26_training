@@ -145,3 +145,10 @@ java -jar selenium-server-4.40.0.jar node ^
 
 #todo Always verify Grid UI after starting:
 # http://<hub-ip>:4444/ui
+
+
+#& -------------------------
+#& Numpy
+#& -------------------------
+
+#run command pip install numpy
