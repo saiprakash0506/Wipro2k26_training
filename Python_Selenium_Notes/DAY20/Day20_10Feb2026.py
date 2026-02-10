@@ -1,15 +1,5 @@
 #Selenium Grid download
 
-'''🔷 What is Selenium Grid?
-
-Selenium Grid allows you to run your Selenium tests on multiple machines, browsers, and operating systems simultaneously.
-
-Instead of running tests only on your local system, Selenium Grid helps you:
-
-• Run tests in parallel
-• Run tests on different browsers (Chrome, Firefox, Edge)
-• Run tests on different OS (Windows, Linux, Mac)
-• Reduce execution time'''
 
 #? ---> https://www.selenium.dev/downloads/
 
@@ -20,7 +10,6 @@ Instead of running tests only on your local system, Selenium Grid helps you:
 #also download the java in the machine
 
 # now run the pytest code
-
 
 
 #~ Selenium Grid is mainly used to connect different machines so tests can run in parallel across multiple browsers, operating systems, or computers.
