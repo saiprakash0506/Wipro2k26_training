@@ -1,24 +1,60 @@
-#Selenium Grid download
+#& =========================================================
+#& SELENIUM GRID DOWNLOAD & SETUP
+#& =========================================================
+
+#? Download Selenium Grid:
+#? https://www.selenium.dev/downloads/
+
+#todo Download the selenium-server-4.x.x.jar
+#todo Place it inside your project folder
+
+#todo Install Java (JDK 11+ required)
+
+# Check Java version:
+# java -version
 
 
-#? ---> https://www.selenium.dev/downloads/
+#& =========================================================
+#& START SELENIUM GRID (STANDALONE MODE)
+#& =========================================================
 
-# download it to the project folder 
+#* Open Command Prompt inside project folder
 
-# then open cmd --->  java -jar selenium-server-4.40.0.jar standalone
+#! Run:
+# java -jar selenium-server-4.40.0.jar standalone
 
-#also download the java in the machine
+#! After running, open:
+# http://localhost:4444/ui
 
-# now run the pytest code
+#todo Now run your pytest automation code
 
 
-#~ Selenium Grid is mainly used to connect different machines so tests can run in parallel across multiple browsers, operating systems, or computers.
+#& =========================================================
+#& WHAT IS SELENIUM GRID USED FOR?
+#& =========================================================
 
-#to connect and run the hub and node , we need to run both hub and run in same machine........................
+#~ Selenium Grid is mainly used to:
+#* Connect different machines
+#* Run tests in parallel
+#* Execute across multiple browsers
+#* Execute across multiple operating systems
 
-#! HUB
 
-'''java -jar selenium-server-4.40.0.jar hub ^
+#& =========================================================
+#& RUNNING HUB & NODE ON SAME MACHINE
+#& =========================================================
+
+#~ To connect Hub and Node manually,
+#~ we must run both commands separately.
+
+#& -------------------------
+#& START HUB
+#& -------------------------
+
+#! HUB COMMAND
+
+'''
+java -jar selenium-server-4.40.0.jar hub ^
 
 --host localhost ^
 
@@ -27,10 +63,13 @@
 --publish-events tcp://localhost:4442 ^
 
 --subscribe-events tcp://localhost:4443
+'''
 
- '''
+#& -------------------------
+#& START NODE
+#& -------------------------
 
-#! NODE
+#! NODE COMMAND
 
 """
 java -jar selenium-server-4.40.0.jar node ^
@@ -40,13 +79,25 @@ java -jar selenium-server-4.40.0.jar node ^
 --publish-events tcp://localhost:4442 ^
 
 --subscribe-events tcp://localhost:4443
-'"""
+"""
 
-#! running node and hub in different machines
-# 
-# hub on machine 1
 
-'''java -jar selenium-server-4.40.0.jar hub ^
+#& =========================================================
+#& RUNNING HUB & NODE ON DIFFERENT MACHINES
+#& =========================================================
+
+#~ Scenario:
+#* Machine 1 → Hub
+#* Machine 2 → Node
+
+#& -------------------------
+#& MACHINE 1 → HUB
+#& -------------------------
+
+#! HUB COMMAND (Machine 1)
+
+'''
+java -jar selenium-server-4.40.0.jar hub ^
 
 --host 0.0.0.0 ^
 
@@ -55,11 +106,19 @@ java -jar selenium-server-4.40.0.jar node ^
 --publish-events tcp://192.168.1.10:4442 ^
 
 --subscribe-events tcp://192.168.1.10:4443
+'''
+
+#~ Note:
+# 192.168.1.10 = IP address of Hub machine
+
+
+#& -------------------------
+#& MACHINE 2 → NODE
+#& -------------------------
+
+#! NODE COMMAND (Machine 2)
 
 '''
- 
-# node on machine 2
-''''
 java -jar selenium-server-4.40.0.jar node ^
 
 --hub http://192.168.1.10:4444 ^
@@ -67,6 +126,22 @@ java -jar selenium-server-4.40.0.jar node ^
 --publish-events tcp://192.168.1.10:4442 ^
 
 --subscribe-events tcp://192.168.1.10:4443
+'''
+
+#~ Make sure:
+#* Both machines are in same network
+#* Firewall allows port 4444, 4442, 4443
+#* Java installed on both machines
 
 
- '''
+#& =========================================================
+#& FINAL QUICK UNDERSTANDING
+#& =========================================================
+
+#! Standalone Mode → Easiest (Hub + Node together)
+#! Hub Mode → Controls execution
+#! Node Mode → Executes tests
+#! Different Machines → Use Hub IP instead of localhost
+
+#todo Always verify Grid UI after starting:
+# http://<hub-ip>:4444/ui

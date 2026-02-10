@@ -1,267 +1,270 @@
-'''1️⃣ What is Selenium Grid?
+#& =========================================================
+#& 1️⃣ WHAT IS SELENIUM GRID?
+#& =========================================================
 
-Selenium Grid is a tool that allows you to run Selenium tests:
+#! Selenium Grid allows you to run Selenium tests:
+#* On multiple machines
+#* On multiple browsers
+#* On multiple operating systems
+#* In parallel
 
-• On multiple machines
-• On multiple browsers
-• On multiple operating systems
-• In parallel
+#! Main Goal: Speed + Cross-Browser Testing
 
-👉 Main goal: Speed + Cross-Browser Testing
 
-2️⃣ Why Selenium Grid is Needed?
-❌ Without Grid
+#& =========================================================
+#& 2️⃣ WHY SELENIUM GRID IS NEEDED?
+#& =========================================================
 
-If you have 100 test cases:
+#~ ❌ Without Grid:
+# Chrome   → 30 mins
+# Firefox  → 30 mins
+# Edge     → 30 mins
+# Total    → 90 mins 😩
 
-Chrome → Run (30 mins)
+#~ ✅ With Grid (Parallel Execution):
+# Chrome + Firefox + Edge run together
+# Total → 30 mins ⚡
 
-Firefox → Run (30 mins)
+#! Parallel execution saves time in large test suites
 
-Edge → Run (30 mins)
 
-Total = 90 minutes 😩
+#& =========================================================
+#& 3️⃣ CORE CONCEPTS
+#& =========================================================
 
-✅ With Grid (Parallel Execution)
+#& 🔹 HUB
+#* Central controller
+#* Receives test requests
+#* Assigns tests to nodes
 
-All 3 browsers run at same time.
+#& 🔹 NODE
+#* Machine that runs browser
+#* Has Chrome / Firefox / Edge
+#* Registers to Hub
 
-Total = 30 minutes ⚡
 
-3️⃣ Core Concepts of Selenium Grid
-🔹 Hub
+#& =========================================================
+#& 4️⃣ SELENIUM GRID 4 ARCHITECTURE
+#& =========================================================
 
-• Central controller
-• Receives test requests
-• Assigns tests to available nodes
+#~ Internal Components (Grid 4):
 
-🔹 Node
+#* Router        → Receives test request
+#* Distributor   → Chooses suitable node
+#* Session Map   → Tracks active sessions
+#* Event Bus     → Internal communication
+#* Node          → Executes the test
 
-• Machine that actually runs the browser
-• Can have Chrome, Firefox, Edge installed
-• Registers itself to the Hub
+#! These components are handled internally
 
-4️⃣ Selenium Grid 4 Architecture (Latest)
-4
 
-Selenium Grid 4 introduced internal components:
+#& =========================================================
+#& 5️⃣ GRID 3 vs GRID 4
+#& =========================================================
 
-• Router – Receives test request
-• Distributor – Decides which node gets test
-• Session Map – Tracks active sessions
-• Event Bus – Communication system
-• Node – Executes test
+#~ Grid 3:
+#* Separate hub & node mandatory
+#* JSON Wire Protocol
+#* Limited UI
+#* Less scalable
 
-But don’t worry — this is handled internally.
+#~ Grid 4:
+#* Standalone mode available
+#* W3C Protocol
+#* Modern UI Dashboard
+#* More scalable
 
-5️⃣ Grid 3 vs Grid 4
-Grid 3	Grid 4
-Separate hub & node mandatory	Standalone mode available
-JSON Wire Protocol	W3C Protocol
-Limited UI	Modern UI Dashboard
-Less scalable	More scalable
-6️⃣ Grid Modes in Selenium 4
-🔹 1. Standalone Mode (Easy)
 
-Hub + Node in single command.
+#& =========================================================
+#& 6️⃣ GRID MODES
+#& =========================================================
 
-Best for beginners.
+#& 🔹 1. Standalone Mode
+#* Hub + Node in single command
+#* Best for beginners
 
-🔹 2. Hub & Node Mode
+#& 🔹 2. Hub & Node Mode
+#* Run hub and nodes separately
 
-Run hub and nodes separately.
+#& 🔹 3. Distributed Mode
+#* Enterprise-level scaling
 
-🔹 3. Distributed Mode
 
-Enterprise-level scaling.
+#& =========================================================
+#& 7️⃣ INSTALLATION STEPS
+#& =========================================================
 
-7️⃣ Installation – Step by Step
-Step 1: Install Java (JDK 11+)
+#todo Step 1: Install Java (JDK 11+)
+# Check version:
+# java -version
 
-Check:
+#todo Step 2: Download selenium-server-4.x.x.jar
 
-java -version
+#todo Step 3: Start Grid
+# java -jar selenium-server-4.x.x.jar standalone
 
-Step 2: Download Selenium Server
+#! Open Dashboard:
+# http://localhost:4444/ui
 
-From selenium.dev
 
-You’ll get:
+#& =========================================================
+#& 8️⃣ HOW PYTHON CONNECTS TO GRID
+#& =========================================================
 
-selenium-server-4.x.x.jar
+#~ Instead of:
+# webdriver.Chrome()
 
-Step 3: Start Grid (Standalone)
-java -jar selenium-server-4.x.x.jar standalone
+#~ We use:
+# webdriver.Remote()
 
+#! Because browser runs remotely
 
-Now open:
 
-http://localhost:4444/ui
+#& =========================================================
+#& 9️⃣ DESIRED CAPABILITIES
+#& =========================================================
 
+#* browserName
+#* browserVersion
+#* platformName
+#* headless mode
+#* logging preferences
 
-You’ll see Grid dashboard.
+# Example:
+# options.add_argument("--headless")
 
-8️⃣ How Python Connects to Grid
 
-Instead of:
+#& =========================================================
+#& 1️⃣1️⃣ PARALLEL EXECUTION
+#& =========================================================
 
-webdriver.Chrome()
+#todo Install:
+# pip install pytest pytest-xdist
 
+#todo Run:
+# pytest -n 4
 
-We use:
+#! This runs 4 tests simultaneously
 
-webdriver.Remote()
 
+#& =========================================================
+#& 1️⃣2️⃣ REAL COMPANY USAGE
+#& =========================================================
 
-Because browser runs remotely.
+#* CI/CD pipelines
+#* Jenkins
+#* GitHub Actions
+#* Cloud environments
+#* Cross-browser testing
 
-9️⃣ Basic Python Example
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
-options = Options()
-options.browser_version = "latest"
-options.platform_name = "Windows"
+#& =========================================================
+#& 1️⃣3️⃣ SELENIUM GRID WITH DOCKER
+#& =========================================================
 
-driver = webdriver.Remote(
-    command_executor="http://localhost:4444",
-    options=options
-)
+#~ Modern companies use Docker
 
-driver.get("https://www.google.com")
-print(driver.title)
-driver.quit()
+# Example:
+# docker run -d -p 4444:4444 selenium/standalone-chrome
 
-🔟 Desired Capabilities / Options
+#! Benefits:
+#* Easy scaling
+#* No dependency issues
+#* Cloud ready
+#* DevOps friendly
 
-You define:
 
-• browserName
-• browserVersion
-• platformName
-• headless mode
-• logging preferences
+#& =========================================================
+#& 1️⃣4️⃣ SCALING STRATEGY
+#& =========================================================
 
-Example:
+#~ Horizontal Scaling:
+#* Add more nodes
 
-options.add_argument("--headless")
+#~ Cloud Scaling:
+#* BrowserStack
+#* Sauce Labs
+#* LambdaTest
 
-1️⃣1️⃣ Running Tests in Parallel
 
-Using pytest:
+#& =========================================================
+#& 1️⃣5️⃣ COMMON ERRORS
+#& =========================================================
 
-pip install pytest pytest-xdist
-pytest -n 4
+#~ SessionNotCreatedException
+# Browser version mismatch
 
+#~ Connection Refused
+# Grid not running
 
-This runs 4 tests simultaneously.
+#~ TimeoutException
+# Node overloaded
 
-1️⃣2️⃣ Real Company Usage
 
-Selenium Grid is used in:
+#& =========================================================
+#& 1️⃣6️⃣ ADVANTAGES
+#& =========================================================
 
-• CI/CD pipelines
-• Jenkins
-• GitHub Actions
-• Cloud environments
-• Cross-browser testing
+#* Faster execution
+#* Parallel testing
+#* Cross-browser testing
+#* Cross-platform testing
+#* CI/CD friendly
 
-1️⃣3️⃣ Selenium Grid with Docker (Modern Approach)
 
-Instead of manual setup, companies use Docker.
+#& =========================================================
+#& 1️⃣7️⃣ DISADVANTAGES
+#& =========================================================
 
-Example:
+#* Complex setup
+#* Requires infrastructure
+#* Debugging slightly harder
 
-docker run -d -p 4444:4444 selenium/standalone-chrome
 
+#& =========================================================
+#& 1️⃣8️⃣ INTERVIEW QUESTIONS
+#& =========================================================
 
-Now Grid runs inside container.
+#? What is Selenium Grid?
+#? What is RemoteWebDriver?
+#? Difference between Grid 3 and Grid 4?
+#? How does parallel execution work?
+#? What is Distributor in Grid 4?
 
-Benefits:
 
-• Easy scaling
-• No dependency issues
-• Works in cloud
-• DevOps friendly
+#& =========================================================
+#& 1️⃣9️⃣ FRAMEWORK STRUCTURE
+#& =========================================================
 
-1️⃣4️⃣ Scaling Selenium Grid
-Horizontal Scaling
+# project/
+# ├── tests/
+# ├── pages/
+# ├── conftest.py
+# ├── requirements.txt
+# └── pytest.ini
 
-Add more nodes.
+#! Grid URL usually configured inside conftest.py
 
-Cloud Scaling
 
-Use:
-• BrowserStack
-• Sauce Labs
-• LambdaTest
+#& =========================================================
+#& 2️⃣0️⃣ WHEN TO USE GRID?
+#& =========================================================
 
-They provide ready-made Grid.
+#* Test cases > 50
+#* Cross-browser testing required
+#* CI/CD execution
+#* Enterprise automation
 
-1️⃣5️⃣ Common Errors & Fixes
-❌ SessionNotCreatedException
 
-Browser version mismatch.
+#& =========================================================
+#& FINAL SUMMARY
+#& =========================================================
 
-❌ Connection Refused
+#! Selenium Grid =
+#* Remote execution
+#* Parallel execution
+#* Cross-browser testing
+#* Scalable automation
 
-Grid not started.
-
-❌ TimeoutException
-
-Node overloaded.
-
-1️⃣6️⃣ Advantages of Selenium Grid
-
-✅ Faster execution
-✅ Parallel testing
-✅ Cross-browser testing
-✅ Cross-platform testing
-✅ CI/CD friendly
-
-1️⃣7️⃣ Disadvantages
-
-❌ Complex setup
-❌ Requires infrastructure
-❌ Debugging slightly harder
-
-1️⃣8️⃣ Interview Questions
-
-Q: What is Selenium Grid?
-Q: What is RemoteWebDriver?
-Q: Difference between Grid 3 and 4?
-Q: How does parallel execution work?
-Q: What is Distributor in Grid 4?
-
-1️⃣9️⃣ Real Framework Structure Example
-project/
-│
-├── tests/
-├── pages/
-├── conftest.py
-├── requirements.txt
-└── pytest.ini
-
-
-Grid URL usually configured inside conftest.py.
-
-2️⃣0️⃣ When Should You Use Grid?
-
-Use Grid when:
-
-• Test cases > 50
-• Need cross-browser testing
-• Running in CI/CD
-• Enterprise-level automation
-
-🎯 Final Summary (Remember This)
-
-Selenium Grid =
-
-👉 Remote execution
-👉 Parallel execution
-👉 Cross-browser testing
-👉 Scalable automation
-
-If Selenium is the engine,
-Selenium Grid is the highway system.'''
+#! Selenium is the engine.
+#! Selenium Grid is the highway system.
