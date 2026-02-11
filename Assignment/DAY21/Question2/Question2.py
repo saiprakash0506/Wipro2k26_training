@@ -1,12 +1,12 @@
 #! this is with pandas
 
-# import pandas as pd
+import pandas as pd
 
-# df = pd.read_excel("Assignment\DAY21\Question2\sales_data.xlsx", sheet_name="2025")
+df = pd.read_excel("Assignment\DAY21\Question2\sales_data.xlsx", sheet_name="2025")
 
-# df["Total"] = df["Quantity"] * df["Price"]
-# print(df)
-# df.to_excel("sales_summary.xlsx",index=False)
+df["Total"] = df["Quantity"] * df["Price"]
+print(df)
+df.to_excel("sales_summary.xlsx", index=False)
 
 
 #! this is now only with openpyxl not with pandas
