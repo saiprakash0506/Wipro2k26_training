@@ -441,8 +441,4 @@ For questions or issues, please open an issue in the repository.
 
 ---
 
-**Happy Coding! 🚀**
-![Python](https://img.shields.io/badge/Python-3.x-blue)
-![Flask](https://img.shields.io/badge/Flask-REST%20API-black)
-![Pytest](https://img.shields.io/badge/Pytest-Automation-green)
-![Robot Framework](https://img.shields.io/badge/RobotFramework-Testing-orange)
+**Happy Coding! 🚀*
