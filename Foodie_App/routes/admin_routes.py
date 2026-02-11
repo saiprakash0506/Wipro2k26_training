@@ -18,7 +18,7 @@ def approve_restaurant(rid):
 
 @admin_bp.route("/restaurants/<int:rid>/disable", methods=["PUT"])
 def disable_restaurant(rid):
-    restaurant = update_restaurant(rid, {"disbaled": True})
+    restaurant = update_restaurant(rid, {"disabled": True})
     if restaurant:
         return success({"message": "Disabled"})
     return error("Not found", 404)
