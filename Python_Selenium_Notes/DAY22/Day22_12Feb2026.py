@@ -1,0 +1,7 @@
+#!      SQL DATABASE INSTALLATION AND SETUP AND WORKING AND CONNECTING DATABSE WITH PYTHON
+
+#^ ---> create table and insert some data into that
+#*--> pip install mysql-connector-python
+
+#!      MONGODB   INSTALLATION AND SETUP AND WORKING AND CONNECTING DATABSE WITH PYTHON
+
