@@ -11,11 +11,11 @@ print("\n Data with Total column:")
 print(df)
 
 
-total_sales=np.sum(df["Total"])
+total_sales = np.sum(df["Total"])
 
-average_daily_sales=np.mean(df["Total"])
+average_daily_sales = np.mean(df["Total"])
 
-std_daily_sales=np.std(df["Total"])
+std_daily_sales = np.std(df["Total"])
 
 print("\nSales Statistics:")
 print("Total Sales:", total_sales)
