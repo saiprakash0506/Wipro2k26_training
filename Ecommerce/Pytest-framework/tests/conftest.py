@@ -1,33 +1,19 @@
 import pytest
 import time
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.firefox import GeckoDriverManager
-from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.common.by import By
-
-def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="chrome")
 
 @pytest.fixture(scope="class")
 def setup(request):
-    browser_name = request.config.getoption("--browser").lower()
-    if browser_name == "chrome":
-        opts = webdriver.ChromeOptions()
-        opts.add_argument("--incognito")
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=opts)
-    elif browser_name == "firefox":
-        opts = webdriver.FirefoxOptions()
-        opts.add_argument("-private")
-        driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=opts)
-    elif browser_name == "edge":
-        opts = webdriver.EdgeOptions()
-        opts.add_argument("-inprivate")
-        driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()), options=opts)
-    
+    chrome_options = Options()
+    chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    chrome_options.add_argument("--incognito")
+
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.maximize_window()
     request.cls.driver = driver
     yield
@@ -37,8 +23,13 @@ def setup(request):
 def log_in_setup(request):
     driver = request.cls.driver
     driver.get("https://www.saucedemo.com/")
+    
+    # We pull the login details directly from the current test row
     current_row = request.node.callspec.params.get("test_info")
+    
     driver.find_element(By.ID, "user-name").send_keys(current_row['username'])
+    time.sleep(0.5)
     driver.find_element(By.ID, "password").send_keys(current_row['password'])
+    time.sleep(0.5)
     driver.find_element(By.ID, "login-button").click()
-    time.sleep(1)
+    time.sleep(1.5)
