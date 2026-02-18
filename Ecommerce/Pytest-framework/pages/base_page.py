@@ -24,7 +24,7 @@ class BasePage:
         time.sleep(self.slow_delay)
         el.send_keys(text)
 
-    # ADDED THIS METHOD TO FIX YOUR ERROR
+
     def smooth_scroll(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element)
         time.sleep(0.5)
