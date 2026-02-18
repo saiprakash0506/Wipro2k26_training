@@ -1,15 +1,9 @@
-How to Execute
-You can now run your 5-row CSV data in whichever browser you choose by changing the command.
 
 To run in Chrome:
-python -m pytest -v --browser chrome --html=reports/chrome_report.html
+pytest tests/ -v --browser chrome --html=reports/chrome_fix.html --self-contained-html
 
 To run in Firefox:
-python -m pytest -v --browser firefox --html=reports/firefox_report.html
+pytest tests/ -v --browser firefox --html=reports/firefox_fix.html --self-contained-html
 
 To run in Edge:
-python -m pytest -v --browser edge --html=reports/edge_report.html
-
-Pro-Level Tip: Running them in Parallel
-
-pip install pytest-xdist
+pytest tests/ -v --browser edge --html=reports/edge_fix.html --self-contained-html
