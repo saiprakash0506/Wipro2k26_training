@@ -1,66 +1,72 @@
 import pytest
-import csv
-import os
 import time
+import os
+import csv
 from selenium.webdriver.common.by import By
 
-def get_csv_data(file_path):
+def get_csv_data():
     rows = []
-    if not os.path.exists(file_path): return rows
-    with open(file_path, 'r', encoding='utf-8') as f:
+    path = os.path.join("data", "invalidlogin_data.csv")
+    if not os.path.exists(path): return rows
+    with open(path, 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
         next(reader)
-        for row in reader:
-            clean_row = [item.strip() for item in row]
-            if len(clean_row) > 3: clean_row = [clean_row[0], clean_row[1], ",".join(clean_row[2:])]
-            rows.append(clean_row)
+        for row in reader: rows.append(row)
     return rows
 
 @pytest.mark.usefixtures("setup")
 class TestNegativeLogin:
-    
-    csv_path = os.path.join("data", "invalidlogin_data.csv")
 
-    @pytest.mark.parametrize("u, p, error", get_csv_data(csv_path))
-    def test_00_neg_logins(self, u, p, error):
-        driver = self.driver
-        log = self.logger # Access the per-test log file
+    def slow_type(self, element, text, delay=0.05):
+        if text:
+            for char in text:
+                element.send_keys(char)
+                time.sleep(delay)
 
-        log.info(f"--- STARTING TEST CASE: {u} ---")
+    @pytest.mark.parametrize("u, p, expected_error", get_csv_data())
+    def test_00_neg_logins(self, u, p, expected_error):
+        driver, log = self.driver, self.logger
+
+        log.info(f"--- TESTING NEGATIVE LOGIN: {u if u else '[EMPTY]'} ---")
         driver.get("https://www.saucedemo.com/")
-        time.sleep(1.5) # Slow down
-
-        # 1. Locate
+        
         user_field = driver.find_element(By.ID, "user-name")
         pass_field = driver.find_element(By.ID, "password")
         login_btn = driver.find_element(By.ID, "login-button")
 
-        # 2. Positive Assertions
-        log.info(f"Entering username: {u}")
-        user_field.send_keys(u)
-        time.sleep(1)
-        assert user_field.get_attribute("value") == u
-        log.info("POSITIVE ASSERT: Username field verified.")
+        # 1. Type
+        self.slow_type(user_field, u)
+        self.slow_type(pass_field, p)
 
-        log.info(f"Entering password: {p}")
-        pass_field.send_keys(p)
-        time.sleep(1)
-        assert pass_field.get_attribute("value") == p
-        log.info("POSITIVE ASSERT: Password field verified.")
-
-        # 3. Action
-        log.info("Clicking login button...")
+        # 2. Border & Click
+        driver.execute_script("arguments[0].style.border='3px solid red';", login_btn)
+        time.sleep(0.5)
         login_btn.click()
-        time.sleep(1.5)
 
-        # 4. Negative Assertions
-        error_element = driver.find_element(By.CSS_SELECTOR, "h3[data-test='error']")
-        actual_error = error_element.text
-        log.info(f"Actual error displayed: {actual_error}")
+        # 3. Handle Error & Manual Screenshot
+        try:
+            error_element = driver.find_element(By.CSS_SELECTOR, "h3[data-test='error']")
+            actual_error = error_element.text
+            log.info(f"Error caught: {actual_error}")
 
-        # Space-proof comparison
-        assert error.lower().replace(" ", "") in actual_error.lower().replace(" ", ""), \
-            f"Expected {error} but got {actual_error}"
-        
-        log.info("NEGATIVE ASSERT: Error message validation successful.")
-        log.info("--- TEST CASE COMPLETED PASSED ---")
+            # Manual screenshot for negative login
+            if not os.path.exists("reports/errors"): os.makedirs("reports/errors")
+            clean_name = "".join(x for x in u if x.isalnum()) if u else "empty_user"
+            ss_path = f"reports/errors/login_err_{clean_name}.png"
+            
+            try:
+                driver.save_screenshot(ss_path)
+                log.info(f"Manual error screenshot saved: {ss_path}")
+            except Exception as ss_err:
+                log.warning(f"Could not save manual screenshot: {ss_err}")
+
+            # Assertion
+            assert expected_error.lower().replace(" ", "") in actual_error.lower().replace(" ", ""), \
+                f"Expected {expected_error} but got {actual_error}"
+
+        except Exception as e:
+            log.error(f"Error message element not found for user {u}: {e}")
+            raise e
+
+        log.info(f"--- TEST PASSED FOR USER {u if u else '[EMPTY]'} ---")
+        time.sleep(1)

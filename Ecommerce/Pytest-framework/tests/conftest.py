@@ -1,102 +1,155 @@
 import pytest
 import os
-import time
 import logging
+import time
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.edge.service import Service as EdgeService
+from selenium.webdriver.edge.options import Options as EdgeOptions
 from webdriver_manager.chrome import ChromeDriverManager
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", action="store", default="chrome", help="Options: chrome, edge, firefox")
+    """Allows passing --browser from the command line."""
+    parser.addoption("--browser", action="store", default="chrome", help="chrome, firefox, or edge")
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="function")
 def setup(request):
-    browser = request.config.getoption("--browser").lower()
-    current_dir = os.path.dirname(os.path.abspath(__file__)) 
-    project_root = os.path.dirname(current_dir) 
-    drivers_path = os.path.join(project_root, "drivers")
+    """
+    Initializes the driver in Incognito/Private mode with a fixed resolution.
+    Sets up a unique logger for every single test case/CSV row.
+    """
+    browser_name = request.config.getoption("--browser").lower()
+    
+    # Identify paths for local drivers
+    base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    drivers_path = os.path.join(base_path, "drivers")
+    
+    firefox_exe = os.path.join(drivers_path, "geckodriver.exe")
+    edge_exe = os.path.join(drivers_path, "msedgedriver.exe")
 
     driver = None
-    if browser == "chrome":
-        opts = webdriver.ChromeOptions()
+
+    # --- 1. BROWSER INITIALIZATION ---
+    if browser_name == "chrome":
+        chrome_options = ChromeOptions()
+        chrome_options.add_argument("--incognito")
+        chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument("--disable-features=PasswordLeakDetection")
+        # Experimental options to kill the password manager popup
         prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False}
-        opts.add_experimental_option("prefs", prefs)
-        opts.add_argument("--disable-features=SafeBrowsingPasswordCheck")
-        opts.add_argument("--incognito")
-        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=opts)
-    elif browser == "edge":
-        exe_path = os.path.join(drivers_path, "msedgedriver.exe")
-        opts = webdriver.EdgeOptions()
-        opts.add_argument("--inprivate")
-        driver = webdriver.Edge(service=EdgeService(exe_path), options=opts)
-    elif browser == "firefox":
-        exe_path = os.path.join(drivers_path, "geckodriver.exe")
-        opts = webdriver.FirefoxOptions()
-        opts.add_argument("-private")
-        opts.set_preference("browser.tabs.remote.autostart", False)
-        opts.set_preference("fission.autostart", False)
-        driver = webdriver.Firefox(service=FirefoxService(exe_path), options=opts)
+        chrome_options.add_experimental_option("prefs", prefs)
+        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
 
-    driver.maximize_window()
-    driver.implicitly_wait(10)
-    if request.cls is not None:
-        request.cls.driver = driver
+    elif browser_name == "firefox":
+        ff_options = FirefoxOptions()
+        ff_options.add_argument("-private")
+        # Fixed size at launch to prevent 'Browsing context discarded' crash
+        ff_options.add_argument("--width=1920")
+        ff_options.add_argument("--height=1080")
+        # Preferences from yesterday's stable run + Layout centering
+        ff_options.set_preference("browser.startup.homepage_override.mstone", "ignore")
+        ff_options.set_preference("startup.homepage_welcome_url.additional", "")
+        ff_options.set_preference("sidebar.visible", False) 
+        ff_options.set_preference("dom.disable_beforeunload", True)
+        ff_options.set_preference("fission.autostart", False)
+        
+        driver = webdriver.Firefox(service=FirefoxService(executable_path=firefox_exe), options=ff_options)
+
+    elif browser_name == "edge":
+        edge_options = EdgeOptions()
+        edge_options.add_argument("-inprivate")
+        edge_options.add_argument("--window-size=1920,1080")
+        driver = webdriver.Edge(service=EdgeService(executable_path=edge_exe), options=edge_options)
     
-    yield driver
-    time.sleep(1)
-    driver.quit()
+    else:
+        raise ValueError(f"Browser {browser_name} is not supported.")
 
-# --- Custom Per-Test Logging Logic ---
-@pytest.fixture(scope="function", autouse=True)
-def test_logger(request):
-    """Creates a separate log file for every test case in reports/logs/"""
-    log_dir = "reports/logs"
+    # --- 2. STABILITY WAIT ---
+    # Critical: Give the browser 2 seconds to initialize before sending commands
+    time.sleep(2)
+    
+    # Do not call maximize_window() on Firefox as it causes the discard crash
+    if browser_name != "firefox":
+        try:
+            driver.maximize_window()
+        except:
+            pass
+            
+    driver.implicitly_wait(10)
+
+    # --- 3. INDIVIDUAL LOGGING PER TEST ---
+    # Create unique name for the log file (handles CSV parametrization rows)
+    node_name = request.node.name.replace("[", "_").replace("]", "_").replace(":", "_")
+    log_dir = os.path.join(base_path, "reports", "logs")
     os.makedirs(log_dir, exist_ok=True)
     
-    # Sanitize test name for filename (remove brackets and special chars)
-    test_name = request.node.name.replace("[", "_").replace("]", "_").replace("-", "_")
-    log_file = os.path.join(log_dir, f"{test_name}.log")
-    
-    # Setup logger
-    logger = logging.getLogger(test_name)
+    logger = logging.getLogger(node_name)
     logger.setLevel(logging.INFO)
-    handler = logging.FileHandler(log_file, mode='w')
-    formatter = logging.Formatter('%(asctime)s - %(message)s', datefmt='%H:%M:%S')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
     
-    # Attach to the test class so the test can use it
+    # Ensure no duplicate log entries
+    if logger.hasHandlers():
+        logger.handlers.clear()
+        
+    log_file_path = os.path.join(log_dir, f"{node_name}.log")
+    file_handler = logging.FileHandler(log_file_path, mode='w')
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+
+    # Attach driver and logger to the class instance
+    request.cls.driver = driver
     request.cls.logger = logger
     
-    yield logger
+    yield driver
     
-    # Clean up handlers to close the file correctly
-    handler.close()
-    logger.removeHandler(handler)
+    # --- 4. TEARDOWN ---
+    try:
+        driver.quit()
+    except:
+        pass # Handle cases where browser already crashed
+    file_handler.close()
+    logger.removeHandler(file_handler)
 
-# --- Screenshot Logic for HTML Report ---
+# --- SCREENSHOT HOOK FOR HTML REPORT ---
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
+    """
+    Captures screenshots on test failure and embeds them in the HTML report.
+    Includes try-except to prevent Pytest internal crashes.
+    """
     pytest_html = item.config.pluginmanager.getplugin('html')
     outcome = yield
     report = outcome.get_result()
     extra = getattr(report, 'extra', [])
 
-    if report.when == 'call' and report.failed:
-        driver = getattr(item.instance, 'driver', None)
+    if (report.when == 'call' or report.when == "setup") and report.failed:
+        # Safely get driver from the test class instance
+        driver = getattr(item.instance, "driver", None) if item.instance else None
+        
         if driver:
-            os.makedirs("reports/screenshots", exist_ok=True)
-            timestamp = datetime.now().strftime("%H%M%S")
-            file_name = f"{item.name}_{timestamp}.png".replace("[","_").replace("]","_")
-            full_path = os.path.join("reports", "screenshots", file_name)
-            driver.save_screenshot(full_path)
-            
-            if pytest_html:
-                relative_path = os.path.join("screenshots", file_name)
-                html = '<div><img src="%s" alt="screenshot" style="width:300px;height:200px;" ' \
-                       'onclick="window.open(this.src)" align="right"/></div>' % relative_path
-                extra.append(pytest_html.extras.html(html))
+            try:
+                # Setup folders
+                os.makedirs("reports/screenshots", exist_ok=True)
+                
+                # File naming
+                timestamp = datetime.now().strftime("%H%M%S")
+                file_name = f"fail_{item.name}_{timestamp}.png"
+                full_path = os.path.join("reports", "screenshots", file_name)
+                
+                # Capture
+                driver.save_screenshot(full_path)
+                
+                # HTML Embedding
+                if pytest_html:
+                    relative_path = f"screenshots/{file_name}"
+                    html = f'<div><img src="{relative_path}" alt="screenshot" style="width:300px;height:200px;" ' \
+                           f'onclick="window.open(this.src)" align="right"/></div>'
+                    extra.append(pytest_html.extras.html(html))
+            except Exception as e:
+                print(f"\nScreenshot Failed: {e}")
+                
     report.extra = extra
