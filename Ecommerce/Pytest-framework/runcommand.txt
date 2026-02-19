@@ -1,9 +1,9 @@
 
 To run in Chrome:
-pytest tests/ -v --browser chrome --html=reports/chrome_fix.html --self-contained-html
+pytest tests/ -v --browser chrome --html=reports/chrome.html --self-contained-html
 
 To run in Firefox:
-pytest tests/ -v --browser firefox --html=reports/firefox_fix.html --self-contained-html
+pytest tests/ -v --browser firefox --html=reports/firefox.html --self-contained-html
 
 To run in Edge:
-pytest tests/ -v --browser edge --html=reports/edge_fix.html --self-contained-html
+pytest tests/ -v --browser edge --html=reports/edge.html --self-contained-html
