@@ -62,15 +62,15 @@ def setup(request):
 
     elif browser_name == "firefox":
         ff_options = FirefoxOptions()
-        ff_options.add_argument("-private")
-        ff_options.add_argument("--width=1920")
-        ff_options.add_argument("--height=1080")
-        ff_options.set_preference("browser.startup.homepage_override.mstone", "ignore")
-        ff_options.set_preference("startup.homepage_welcome_url.additional", "")
-        ff_options.set_preference("sidebar.visible", False) 
-        ff_options.set_preference("dom.disable_beforeunload", True)
-        ff_options.set_preference("fission.autostart", False)
-        driver = webdriver.Firefox(service=FirefoxService(executable_path=firefox_exe), options=ff_options)
+        ff_options.set_preference("browser.privatebrowsing.autostart", True)
+        ff_options.set_preference("layout.css.devPixelsPerPx", "1.0")
+
+        driver = webdriver.Firefox(
+        service=FirefoxService(executable_path=firefox_exe),
+        options=ff_options
+        )
+
+        driver.set_window_rect(0, 0, 1920, 1080)
 
     elif browser_name == "edge":
         edge_options = EdgeOptions()
